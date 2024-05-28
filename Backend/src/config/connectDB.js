@@ -1,11 +1,13 @@
+require('dotenv').config()
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
- 'web_cv',
- 'root',
- '',
+ `${process.env.DB_DATABASE}`,
+ `${process.env.DB_USERNAME}`,
+ `${process.env.DB_PASSWORD}`,
   {
-    host: 'localhost',
-    dialect: 'mysql'
+    host: `${process.env.DB_HOSTNAME}`,
+    port:`${process.env.DB_PORT}`,
+    dialect: `${process.env.DB_DIALECT}`
   }
 );
 let connectDB = async ()=>{

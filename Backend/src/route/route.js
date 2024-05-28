@@ -3,6 +3,7 @@ let userController = require('../controllers/userController');
 let productController = require('../controllers/productController');
 let cartController = require('../controllers/cartController');
 let orderController = require('../controllers/orderController')
+let commentController = require('../controllers/commentController')
 
 let router=express.Router()
 let {verifyAccessToken} = require('../middlewares/verifyToken')
@@ -35,7 +36,12 @@ let initWebRoutes = (app) => {
     // Order
     router.post('/api/create-order',orderController.createOrder);
     router.get('/api/get-all-order',orderController.getAllOrder);
+    router.get('/api/get-all-order-user',orderController.getAllOrderUser);
     router.put('/api/modify-state-order',orderController.modifyStateOrder);
+
+    // Comment
+    router.post('/api/create-comment',commentController.createComment);
+    router.get('/api/get-comment-by-product-id',commentController.getCommentbyProductId);
 
 
     return app.use("/",router)

@@ -21,6 +21,9 @@ module.exports = {
       addressShipping: {
         type: Sequelize.STRING
       },
+      isRate: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

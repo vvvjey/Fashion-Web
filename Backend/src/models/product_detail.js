@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Product_detail.belongsTo(models.Product,{foreignKey:"productId",targetKey:"productId"})
       Product_detail.belongsTo(models.Cart_detail, { foreignKey: "productDetailId", targetKey: "productDetailId" });
+      Product_detail.belongsTo(models.Order_detail, { foreignKey: "productDetailId" }); // Changed foreign key
     }
   }
   Product_detail.init({

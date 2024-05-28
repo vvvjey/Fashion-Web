@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Order.hasMany(models.Order_detail,{foreignKey:"orderId"})
+      Order.hasMany(models.Comment,{foreignKey:"orderId"})
 
     }
   }
@@ -23,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     total: DataTypes.INTEGER,
     state:DataTypes.STRING,
     addressShipping:DataTypes.STRING,
+    isRate:DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Order',

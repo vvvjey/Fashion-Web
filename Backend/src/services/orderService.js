@@ -1,3 +1,4 @@
+const { Model } = require('sequelize');
 const db = require('../models/index')
 let createOrder = (data)=>{
     return new Promise(async(resolve, reject) => {
@@ -12,13 +13,14 @@ let createOrder = (data)=>{
                     userId:data.userId,
                     addressShipping:data.addressShipping,
                     total:data.total,
-                    state:"Pending"
+                    state:"Pending",
+                    isRate:false
                 })
                 await data.productsInfor.map(async(item)=>{
                     await db.Order_detail.create({
                         orderId:order.orderId,
                         productDetailId:item.productDetailId,
-                        quantity:item.quantity
+                        quantity:item.quantity,
                     })
                 })
                 // DELETE CART
@@ -52,7 +54,101 @@ let createOrder = (data)=>{
 let getAllOrder = () =>{
     return new Promise(async(resolve, reject) => {
         try {
-           let orders = await db.Order.findAll()
+            let orders = await db.Order.findAll({
+                include: [
+                    {
+                        model: db.Order_detail,
+                        include:[
+                            {
+                                model:db.Product_detail,
+                                include:[
+                                    {
+                                        model:db.Product
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+            
+        //    console.log(orders[0].Order_details)
+    
+           if(!orders) {
+                resolve({
+                    errCode: 0,
+                    message: "There no order"
+                });
+           } else {
+                resolve({
+                    errCode: 0,
+                    message: "Success",
+                    orders
+                });
+           }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+let getAllOrderUser = (userId,contentSelection) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            console.log(contentSelection)
+            if(!userId && !contentSelection){
+                resolve({
+                    errCode: 1,
+                    message: "Missing required parameter"
+                });
+            }
+            let orders=null;
+            if(contentSelection=="Order"){
+                 orders = await db.Order.findAll({
+                    where:{
+                        userId:userId
+                    },
+                    include: [
+                        {
+                            model: db.Order_detail,
+                            include:[
+                                {
+                                    model:db.Product_detail,
+                                    include:[
+                                        {
+                                            model:db.Product
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                });
+            } else {
+                 orders = await db.Order.findAll({
+                    where:{
+                        userId:userId,
+                        state:contentSelection
+                    },
+                    include: [
+                        {
+                            model: db.Order_detail,
+                            include:[
+                                {
+                                    model:db.Product_detail,
+                                    include:[
+                                        {
+                                            model:db.Product
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+            
+        //    console.log(orders[0].Order_details)
+    
            if(!orders) {
                 resolve({
                     errCode: 0,
@@ -108,5 +204,6 @@ let modifyStateOrder = (data)=>{
 module.exports={
     createOrder,
     getAllOrder,
-    modifyStateOrder
+    modifyStateOrder,
+    getAllOrderUser
 }

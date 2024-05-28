@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    restart: always
+    environment:
+      - MYSQL_DATABASE=web_cv
+      - MYSQL_ROOT_PASSWORD=123
+    ports:
+      - '3307:3306'
+    expose:
+      - 3306
+  backend:
+    build:
+      context: ../../Backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - DB_PORT=3306
+      - DB_HOSTNAME=db
+      # - DB_HOSTNAME=host.docker.internal
+    ports:
+      - 5000:5000

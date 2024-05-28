@@ -3,8 +3,8 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var randToken = require('rand-token');
 const saltRounds = 10;
-const accessTokenLife = "10m";
-const refreshTokenLife = "100m";
+const accessTokenLife = "1h";
+const refreshTokenLife = "10h";
 const TokenSecret = "abc";
 let createUser = async(data,res)=>{
     return new Promise (async(resolve,reject)=>{
@@ -83,17 +83,12 @@ let createUser = async(data,res)=>{
                 userRaw.refreshToken = refreshToken;
                 await userRaw.save();
             }
-
-            res.cookie('access-token',accessTokenAction,{
-                maxAge:1000*60*1
-            })
-            res.cookie('refresh-token',refreshTokenAction,{
-                maxAge:1000*60*10
-            })
             resolve({
                 errCode:0,
                 user,
-                errMessage:"Create successfully"
+                errMessage:"Create successfully",
+                accessToken:accessTokenAction,
+                refreshToken:refreshTokenAction
             })
         } catch (error) {
             console.log(error)
@@ -101,88 +96,80 @@ let createUser = async(data,res)=>{
         }
     })
 }
-let login = (data,res)=>{
-    return new Promise(async(resolve,reject)=>{
-        try {
-            if(!data.username || !data.password){
-                resolve({
-                    errCode:1,
-                    errMessage:"Missing required parameter"
-                })
-            } else {
-                // FIND USER 
-                console.log('usernaem dta:',data.username,data.password)
-                let user = await db.User.findOne({
-                    where:{
-                        username:data.username,
-                    },
-                    include: [
-                        {
-                          model: db.Cart
-                        }
-                    ]
-                })
-                if(user){
-                    const isPasswordValid = await bcrypt.compareSync(data.password, user.password);
-                    if (!isPasswordValid) {
-                        resolve({
-                            errCode:1,
-                            errMessage:'Mật khẩu không chính xác.'
-                        });
-                    } else {
-                        const dataForAccessToken = {
-                            username: user.username,
-                            email:user.email
-                        };
-                        const dataForRefreshToken = {
-                            email:user.email
-                        };
-            
-                        let accessToken = await getJWTToken(dataForAccessToken,accessTokenLife);
-                        let refreshToken = user.refreshToken
-    
-                        
-    
-                        if (!refreshToken) {
-                            console.log('tao refreshToken')
-                            refreshToken = await getJWTToken(dataForRefreshToken,refreshTokenLife);
-                            // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
-                            user.refreshToken = refreshToken;
-                            await user.save();
-                        }
-    
-                        res.cookie('access-token',accessToken,{
-                            maxAge:1000*60*1
-                        })
-                        res.cookie('refresh-token',refreshToken,{
-                            maxAge:1000*60*10
-                        })
-    
-                        resolve({
-                            errCode:0,
-                            errMessage:"Login successfully",
-                            user,
-                            refreshToken,
-                            accessToken
-                        })
-                    }
-                } else {
-                    resolve({
-                        errCode:1,
-                        errMessage:"Username or password not incorrect"
-                    })
-                }
-                
-        
-            }
-        } catch (error) {
-            console.log(error)
-            reject(error)
+let login = async (data, res) => {
+    try {
+        if (!data.username || !data.password) {
+            return {
+                errCode: 1,
+                errMessage: "Missing required parameter"
+            };
         }
-        
-    })
-    
-}
+
+        let user = await db.User.findOne({
+            where: {
+                username: data.username,
+            },
+            include: [{
+                model: db.Cart
+            }]
+        });
+
+        if (!user) {
+            return {
+                errCode: 1,
+                errMessage: "Username or password is incorrect"
+            };
+        }
+
+        const isPasswordValid = await bcrypt.compareSync(data.password, user.password);
+
+        if (!isPasswordValid) {
+            return {
+                errCode: 1,
+                errMessage: "Password is incorrect"
+            };
+        }
+
+        const dataForAccessToken = {
+            username: user.username,
+            email: user.email
+        };
+        const dataForRefreshToken = {
+            email: user.email
+        };
+
+        const accessToken = await getJWTToken(dataForAccessToken, accessTokenLife);
+        const refreshToken = user.refreshToken || await getJWTToken(dataForRefreshToken, refreshTokenLife);
+
+        // Set the expiration time for access token
+        // const accessTokenExpTime = Date.now() + (10 * 60 * 1000); // 10 minutes in milliseconds
+        // // Set the expiration time for refresh token
+        // const refreshTokenExpTime = Date.now() + (100 * 60 * 1000); // 100 minutes in milliseconds
+
+        // Set cookies with expiration time
+        // res.cookie('access-token', accessToken, {
+        //     expires: new Date(accessTokenExpTime),
+        //     // httpOnly: true
+        // });
+        // res.cookie('refresh-token', refreshToken, {
+        //     expires: new Date(refreshTokenExpTime),
+        //     // httpOnly: true
+        // });
+
+        return {
+            errCode: 0,
+            errMessage: "Login successfully",
+            user,
+            accessToken,
+            refreshToken
+        };
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+
 
 let refreshAccessToken = (refreshToken,res)=>{
     return new Promise (async(resolve,reject)=>{
@@ -218,7 +205,7 @@ let refreshAccessToken = (refreshToken,res)=>{
         }
     })
 }
-getAllUser = () =>{
+let getAllUser = () =>{
     return new Promise (async(resolve,reject)=>{
         try {
             let users = await db.User.findAll({
@@ -240,7 +227,7 @@ getAllUser = () =>{
         }
     })
 }
-deleteUser = (data) =>{
+let deleteUser = (data) =>{
     return new Promise (async(resolve,reject)=>{
         try {
             i
@@ -332,6 +319,11 @@ let loginAdmin = async (data) =>{
                             errCode:0,
                             errMessage:"login successfully",
                             user
+                        })
+                    } else {
+                        resolve({
+                            errCode:1,
+                            errMessage:"Username or password was incorrect",
                         })
                     }
                 }
