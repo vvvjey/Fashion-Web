@@ -1,0 +1,35 @@
+.footer-container{
+    width: 100%;
+    display: flex;
+    background-color: black;
+    color:white;
+    padding: 20px 0;
+    .content-left{
+        width: 60%;
+        display: flex;
+        .left-item{
+            width: 30%;
+            list-style: none;
+            li{
+                &:first-child{
+                    border-bottom: 1px solid white;
+                    padding: 10px 0;
+                    font-size: 28px;
+                    margin-bottom: 10px;
+                }
+                padding: 10px 0;
+            }    
+        }
+        
+    }
+    .content-right{
+        width: 30%;
+        margin: 0 auto;
+        input{
+            color: #1a1a1a;
+            background-color: #f6f6fb;
+            border-radius: 30px;
+            padding:10px 30px;
+        }
+    }
+}

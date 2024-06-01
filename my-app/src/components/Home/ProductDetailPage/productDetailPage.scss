@@ -1,0 +1,182 @@
+.product-detail-container{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 100px;
+    .content{
+        display: flex;
+        .content-left{
+            width: 50%;
+            img{
+                width: 100%;
+                border: 2px solid rgba(246, 246, 251,1);
+
+            }
+        }
+        .content-right{
+            width: 50%;
+            padding: 20px;
+            .name{
+                font-size: 30px;
+                font-weight: 700;
+            }
+            .price{
+                font-size: 24px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid black;
+            }
+            .color{
+                margin: 10px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                width: 100%;
+                .color-item{
+                    font-size: 14px;
+                    cursor: pointer;
+                    text-align: center;
+                    width: 20%;
+                    margin: 10px 20px;
+                    padding: 5px 10px;
+                    border:1px solid black;
+                    &.active{
+                        border:3px solid black;
+                    }
+                }
+            }
+            .size{
+                margin: 10px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                width: 100%;
+                .size-item{
+                    font-size: 14px;
+                    text-align: center;
+                    width: 15%;
+                    margin: 10px 20px;
+                    padding: 5px 10px;
+                    border:1px solid black;
+                    background-color: white;
+                    opacity: 0.5;
+                    &.active{
+                        cursor: pointer;
+                        opacity: 1;
+                        border:1px solid black;
+
+                    }
+                    &.picked{
+                        border:3px solid black;
+                    }
+                }
+            }
+            .quantity{
+                margin:30px 30px;
+                .number-counter {
+                    display: flex;
+                    align-items: center;
+                  }
+                  
+                  .counter-button {
+                    width: 30px;
+                    height: 30px;
+                    font-size: 18px;
+                    background-color: #f0f0f0;
+                    border: none;
+                    cursor: pointer;
+                  }
+                  
+                  .counter-input {
+                    width: 60px;
+                    height: 30px;
+                    text-align: center;
+                    margin: 0 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    font-size: 14px;
+                  }
+                  .counter-input::-webkit-inner-spin-button,
+                .counter-input::-webkit-outer-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+                
+                .counter-input:focus {
+                  outline: none;
+                  border-color: #007bff;
+                }
+            }
+            .purchase{
+                margin: 20px auto;
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+                text-align: center;
+                .add-to-cart{
+                    padding: 10px 20px;
+                    border: 1px solid black;
+                    width: 40%;
+                    cursor: pointer;
+                }
+                .buy{
+                    padding: 10px 20px;
+                    border: 1px solid black;
+                    width: 35%;
+                    cursor: pointer;
+
+                }
+            }
+        }
+    }
+    .description{
+        margin-top: 100px;
+    }
+    .feedback-section{
+        margin-top: 100px;
+        .heading{
+            text-align: center;
+            font-size: 60px;
+            font-weight: 600;
+            color: rgb(51, 50, 50);
+        }
+        .sort{
+
+        }
+        .comments{
+            margin-bottom: 100px;
+            margin-top: 40px;
+            .item{
+                display: flex;
+                padding: 20px 30px;
+                background-color: #f6f6fb;
+                margin: 40px 0;
+                .name{
+                    width: 25%;
+                    padding: 0 0 0 24px;
+                    font-size: 24px;
+                }
+                .comment-content{
+                    width: 40%;
+                    .star{
+                        padding-bottom: 20px;
+                        .icon-star{
+                            margin: 0 6px 0 0;
+                            font-size: 20px;
+                            color: rgb(237, 237, 43);
+                        }
+                    }
+                    .comment-description{
+                        font-size: 20px;
+                    }
+                }
+                .date{
+                    font-size: 20px;
+                    width: 30%;
+                    text-align: end;
+                }
+            }
+        }
+    }
+}
+
+
+

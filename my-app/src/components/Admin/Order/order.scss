@@ -1,0 +1,19 @@
+.admin-home-container{
+    background-color: rgb(230, 242, 255);
+    display: flex;
+    .content-right{
+        width: 80%;
+        .content{
+            margin: 40px auto 0;
+            width: 90%;
+            background-color: white;
+            min-height: 860px;
+            table{
+                .select{
+                    border-radius: 10px;
+                    padding: 6px 16px;
+                }
+            }
+        }
+    }
+}

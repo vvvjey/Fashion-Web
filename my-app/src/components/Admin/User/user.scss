@@ -1,0 +1,74 @@
+.admin-home-container{
+    background-color: rgb(230, 242, 255);
+    display: flex;
+    .content-right{
+        width: 80%;
+        margin-left: 300px;
+        .content {
+            border-radius: 10px;
+            margin: 40px auto;
+            width: 95%;
+            background-color: white;
+            .heading{
+                margin: 20px 0;
+                padding: 10px 20px;
+                font-size: 30px;
+                display: flex;
+                justify-content: space-between;
+                .create-btn{
+                    border: none;
+                    background-color: rgb(214, 225, 236);
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                }
+            }
+            .table {
+                margin-left: auto;
+                margin-right: auto;
+                width: 95%;
+                tbody{
+                    width: 100%;
+                    tr{
+                        display: flex;
+                        td,th{
+                            border-bottom-width:0px;
+                            margin-top: auto;
+                            margin-bottom: auto;
+                            text-align: center;
+                            flex: 1;
+                            overflow: hidden;
+                            font-size: 14px;
+                            color: rgb(90, 90, 90);
+                            img{
+                                width: 100%;
+                                object-fit: contain;
+                            }
+                        }
+                        
+                    }
+                    tr:first-child {
+                        td {
+                            padding: 10px 6px;
+                            flex: 1;
+                            background-color: rgb(214, 225, 236);
+                            color: black; /* text color for title row */
+                            font-weight: bold; /* optional: make the text bold */
+                            
+                        }
+                    }
+                    .name{
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .delete-btn{
+                        margin: 0 4px;
+                        border: none;
+                        background-color: rgb(214, 225, 236);
+                        padding: 4px 10px;
+                        border-radius: 6px;
+                    }
+                }
+            }
+        }
+    }
+}

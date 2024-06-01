@@ -1,0 +1,38 @@
+.products-container{
+    margin-top: 72px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content:space-between;
+
+    .product-container{
+        width: 22%;
+        cursor: pointer;
+        margin: 10px 0;
+        display: block;
+        
+    }
+}
+
+
+.pagination-container{
+    display: flex;
+    justify-content: center;
+
+    color: rgb(92, 180, 244);;
+    padding: 10px 0;
+    font-size: 24px;
+    margin-bottom: 0;
+    margin-top: 100px;
+    font-weight: 700;
+    li{
+        padding: 0 20px;
+        list-style: none;
+        a{
+            color: rgb(92, 180, 244);;
+            text-decoration: none;
+
+        }
+    }
+}

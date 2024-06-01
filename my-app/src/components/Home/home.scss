@@ -1,0 +1,85 @@
+.container{
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 1540px !important;
+    .content-container{
+        width: 95%;
+        margin: 72px auto 0;
+        .carousel{
+            width: 100%;
+            margin-top: 72px;
+            margin:0 auto;
+            margin-bottom: 50px;
+            img{
+                object-position: center;
+                object-fit: cover;
+            }
+        }
+        .category{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin: 100px 0;
+            .category-item{
+                text-decoration: none;
+                color:black;
+                width: 23%;
+                cursor: pointer;
+                img{
+                    width: 100%;
+                }
+            }
+        }
+        .trending{
+            display: flex;
+            width: 100%;
+            margin: 100px 0;
+    
+            .content-right{
+                width: 50%;
+                img{
+                    width: 100%;
+                }
+    
+            }
+            .content-left{
+                width: 50%;
+                padding: 25px;
+                margin: auto 0;
+                text-align: center;
+                h1{
+                }
+                h2{
+                    
+                }
+                h3{
+                    align-items: center;
+                    margin-bottom: 40px;
+                }
+                a{
+                    padding:25px 60px;
+                    background-color: black;
+                    color: white;
+                    font-weight: 700;
+                    cursor: pointer;
+                }
+                a:hover{
+                    background-color: rgb(83, 156, 156);
+                    color: white;
+                }
+            }
+        }
+        .new-product{
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            margin-bottom: 50px;
+            margin-top: 50px;
+            .new-product-item{
+                width: 16%;
+                cursor: pointer;
+            }
+        }
+    }
+}

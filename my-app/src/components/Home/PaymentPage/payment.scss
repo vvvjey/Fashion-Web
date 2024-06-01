@@ -1,0 +1,121 @@
+.payment-container{
+    margin-top: 72px;
+    min-height: 1000px;   
+    display: flex;
+    padding: 20px;
+    .content-left{
+        width: 65%;
+        .heading{
+            margin-top: 20px;
+           margin-left: 40px;
+           font-size: 36px;
+           font-weight: 600;
+        }
+        table{
+            margin: 0 auto;
+            tr{
+                .row-payment{
+                    padding:20px 0 !important;
+                }
+                &:first-child{
+                    border-bottom: 1px solid black;
+                    th{
+                        color:black;
+
+                    }
+
+                }
+            }
+            th{
+                color:gray;
+                text-align: center;
+                height: 80px;
+                padding: 10px 40px;
+                align-items: center;
+                .img{
+                    height: 80px;
+                    object-fit: contain;
+                }
+            }
+            .name{
+                color:black;
+            }
+            .delete-btn{
+                font-size: 18px;
+                cursor: pointer;
+            }
+            
+        }
+        .total{
+            border-top: 1px solid gray;
+            margin-top: 40px;
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            .continue-shopping{
+                font-size: 24px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+            .cost{
+                .sub-total{
+
+                }
+                .shipping-cost{
+                    border-bottom: 1px solid gray;
+                    padding-bottom: 20px;
+                }
+                .total-cost{
+                    margin-top: 10px;
+                    font-size: 24px;
+                    color:black;
+                }
+            }
+        }
+    }
+    .content-right{
+        width: 35%;
+        margin-left: 40px;
+        .heading{
+            margin-top: 20px;
+           font-size: 36px;
+           font-weight: 600;
+        }
+        .method{
+            .payment-method{
+                display: block;
+                margin: 10px 0; 
+                span{
+                    margin-left: 10px;
+                }
+            }
+        }
+        .checkout-btn{
+            margin-top: 60px;
+            padding: 10px 100px;
+            border: none;
+            background-color: blue;
+            color:white;
+            border-radius: 20px;
+        }
+        .user-infor{
+            margin-top: 0;
+            .address{
+                margin: 30px 0;
+                input{
+                    padding: 6px  320px 6px 12px;
+                    border-radius: 10px;
+                    border: 1px solid gray;
+                }
+            }
+            .name{
+                input{
+                    padding: 6px  320px 6px 12px;
+                    border-radius: 10px;
+                    border: 1px solid gray;
+
+                }
+            }
+        }
+    }
+}

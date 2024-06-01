@@ -1,0 +1,29 @@
+
+.sidebar{
+    width: 20%;
+    min-height:1000px;
+    background-color: rgb(86, 143, 243);
+    color: white;
+    position: fixed;
+    z-index: 1;
+    .logo{
+        text-align: center;
+        height: 120px;
+        width: 100%;
+    }
+    .menu-container{
+        padding: 0 10px;
+        .title{
+
+        }
+        .function{
+            list-style: none;
+            .item{
+                a{
+                    text-decoration: none;
+                    color: white;
+                }
+            }
+        }
+    }
+}

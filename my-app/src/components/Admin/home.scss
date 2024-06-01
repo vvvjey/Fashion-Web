@@ -1,0 +1,44 @@
+.admin-home-container{
+    background-color: rgb(230, 242, 255);
+    display: flex;
+    .content-right{
+        width: 80%;
+        
+        .number-monthly{
+            margin: 40px auto 0;
+            width: 90%;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            .number-monthly-item{
+                width: 23%;
+                // border: 3px solid #568ff3;
+                border-radius: 20px;
+                padding:30px 0;
+                background-color: white;
+                .icon {
+                    text-align: center;
+                    padding: 10px 0;
+                    font-size: 18px;
+                }                    
+                .number{
+                    text-align: center;
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+                .name{
+                    font-size: 16px;
+                    color: gray;
+                    text-align: center;
+                }
+            }
+        }
+        .content{
+            margin: 40px auto 0;
+            width: 90%;
+            background-color: white;
+            min-height: 860px;
+            padding: 20px;
+        }
+    }
+}
