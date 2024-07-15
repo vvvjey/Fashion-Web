@@ -7,7 +7,8 @@ import { Carousel } from 'react-responsive-carousel';
 import "./home.scss"
 import Product from '../Product/product';
 import Footer from '../Footer/footer';
-import {getFiveNewestProducts} from '../../services/userServices'
+import LiveChat from './LiveChat/livechat';
+import {getFiveNewestProducts,getFiveMostRatingProducts} from '../../services/userServices'
 function Home() {
 
     const counter = useSelector((state) => state.counterReducer.count);
@@ -17,7 +18,8 @@ function Home() {
     useEffect(() => {
         const fetchNewestProducts = async () => {
             try {
-                let response = await getFiveNewestProducts();
+                let response = await getFiveMostRatingProducts();
+                console.log('ré',response)
                 if(response.data.data.errCode == 0 ) {
                     setFiveNewestProducts(response.data.data.products)
                 }
@@ -89,6 +91,7 @@ function Home() {
                     }
                     
                 </div>
+                <LiveChat/>
                 <div className='trending'>
                     <div className='content-right'>
                         <img src="https://stance.eu.com/cdn/shop/files/snow-featured-tile_748b9f36-4aa4-4f78-8fbb-7091d7ac233f.jpg?v=1707498355&width=950"></img>
@@ -99,6 +102,9 @@ function Home() {
                         <h3>Gear up and ride in comfort this season with our latest winter-ready snow styles worn and tested by our Punk & Poet team.</h3>
                         <a> Shop now</a>
                     </div>
+                </div>
+                <div className='new-product-title'>
+                    Trending Products
                 </div>
                 <div className='new-product'>
                     {fiveNewestProducts && 

@@ -1,0 +1,12 @@
+.chat-header{
+    display: flex;
+    height: 78px;
+    align-items: center;
+    .find-user-input{
+        margin-left: 40px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        background-color: rgb(231, 231, 229);
+    }
+}

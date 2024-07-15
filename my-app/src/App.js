@@ -12,6 +12,8 @@ import AdminProduct from './components/Admin/Product/product';
 import AdminUser from './components/Admin/User/user';
 import AdminOrder from './components/Admin/Order/order';
 import AdminLogin from './components/Admin/Login/login';
+import AdminChat from './components/Admin/LiveChat/livechat';
+import Chat from './components/Chat/chat'
 import {Authenticate,NotAuthenticate,authMiddleware,AuthenticateAdmin} from '../src/middleware/authenticate';
 import {useState,useEffect} from 'react';
 import { useDispatch } from 'react-redux';
@@ -41,8 +43,12 @@ function App() {
         <Route path="/admin/product" element={<AuthenticateAdmin><AdminProduct /></AuthenticateAdmin>}/>
         <Route path="/admin/user" element={<AuthenticateAdmin><AdminUser /></AuthenticateAdmin>}/>
         <Route path="/admin/order" element={<AuthenticateAdmin><AdminOrder /></AuthenticateAdmin>}/>
+        <Route path="/admin/chat" element={<AuthenticateAdmin><AdminChat /></AuthenticateAdmin>}/>
         <Route path="/admin/login" element={<AdminLogin />}/>
+
         <Route path="/admin" element={<AuthenticateAdmin><AdminHome /></AuthenticateAdmin>}/>
+        {/* CHAT */}
+        <Route path="/chat" element={<Chat />}/>
 
 
       </Routes>

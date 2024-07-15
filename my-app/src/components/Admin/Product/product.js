@@ -17,7 +17,7 @@ function AdminProduct() {
     const [modalStock, setModalStock] = useState('');
     const [modalPrice, setModalPrice] = useState('');
     const [modalCategory, setModalCategory] = useState('');
-    const [modalImage, setModalImage] = useState('');
+    const [modalImage, setModalImage] = useState(null);
     const [deleteAction,setDeleteAction] = useState(true)
     useEffect(() => {
         const fetchData = async () => {
@@ -34,15 +34,21 @@ function AdminProduct() {
         if(!modalName|| !modalSize|| !modalColor|| !modalStock|| !modalPrice|| !modalCategory|| !modalImage){
             toast.error("Missing required input")
         } else {
-            let res = await createNewProduct({
-                name:modalName,
-                size:modalSize,
-                color:modalColor,
-                stock:modalStock,
-                price:modalPrice,
-                categoryId:modalCategory,
-                img:modalImage
-            })
+            const formData = new FormData();
+            formData.append('name', modalName);
+            formData.append('size', modalSize);
+            formData.append('color', modalColor);
+            formData.append('stock', modalStock);
+            formData.append('price', modalPrice);
+            formData.append('categoryId', modalCategory);
+            formData.append('img', modalImage);
+            console.log('form data',formData)
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+            let res = await createNewProduct(
+                formData
+            )
             if(res.data.data.errCode==0){
                 toast.success("Create success")
                 setIsShowCreateBtn(false)
@@ -194,11 +200,11 @@ function AdminProduct() {
                                 <div className='form-input'>
                                     <label>Image</label>
                                     <input
-                                        type='text'
+                                        type='file'
                                         className='modal-input'
                                         placeholder='Image of product'
-                                        value={modalImage}
-                                        onChange={(e) => setModalImage(e.target.value)}
+                                        // value={modalImage}
+                                        onChange={(e) => setModalImage(e.target.files[0])}
                                     ></input>
                                 </div>
                             </div>

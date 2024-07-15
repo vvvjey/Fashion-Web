@@ -36,8 +36,11 @@ let getProductById = (productId) => {
 let getFiveNewestProducts = () => {
     return axios.get(`/api/get-five-newest-products`)
 }
+let getFiveMostRatingProducts = () => {
+    return axios.get(`/api/get-five-most-rating-product`)
+}
 let createNewProduct = (data) => {
-    return axios.post(`/api/create-product`,{data})
+    return axios.post(`/api/create-product`,data)
 }
 let deleteProduct = (data) => {
     return axios.delete(`/api/delete-product`,{data})
@@ -76,6 +79,22 @@ let createComment = (data) => {
 let getCommentByProductId = (productId) => {
     return axios.get(`/api/get-comment-by-product-id?productId=${productId}`)
 }
+// Chat
+let userChats = (userId) => {
+    return axios.get(`/api/user-chats?userId=${userId}`)
+}
+let getMessage = (chatId) => {
+    return axios.get(`/api/get-message?chatId=${chatId}`)
+}
+let addMessage = (data) => {
+    return axios.post(`/api/add-message`,{data})
+}
+let findChat = (senderId,receiverId) => {
+    return axios.get(`/api/find-chat?senderId=${senderId}&receiverId=${receiverId}`)
+}
+let createChat = (data) => {
+    return axios.post(`/api/create-chat`,{data})
+}
 export {
     createUser,
     test,
@@ -100,5 +119,11 @@ export {
     loginAdmin,
     getAllOrderUser,
     createComment,
-    getCommentByProductId
+    getCommentByProductId,
+    userChats,
+    getMessage,
+    addMessage,
+    findChat,
+    createChat,
+    getFiveMostRatingProducts
 }

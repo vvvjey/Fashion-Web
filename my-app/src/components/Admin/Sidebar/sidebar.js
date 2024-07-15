@@ -40,11 +40,11 @@ function Sidebar() {
                             </Link>
                         </li> 
                     </ul>
-                    <h4 className='title'>Payment</h4>
+                    <h4 className='title'>Chat</h4>
                     <ul className='function'>
                         <li className='item'>
-                            <Link to="/admin/user">
-                                View payment
+                            <Link to="/admin/chat">
+                                Contact to customer
                             </Link>
                         </li> 
                     </ul>
