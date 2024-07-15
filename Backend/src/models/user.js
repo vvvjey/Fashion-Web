@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasOne(models.Cart, { foreignKey: "userId",sourceKey: "id"})
+      User.hasMany(models.Chat, { foreignKey: "receiverId", sourceKey: "id", as: "ReceivedChats" });
+      User.hasMany(models.Chat, { foreignKey: "senderId", sourceKey: "id", as: "SentChats" });
+
 
     }
   }

@@ -1,8 +1,11 @@
 var productService = require("../services/productService")
+
+
+
+
 let createProduct = async(req,res) =>{
     try{
-        console.log(req.body.data)
-        let data = await productService.createProduct(req.body.data);
+        let data = await productService.createProduct(req.body,req.file);
         return res.status(200).json({
             data
         })
@@ -87,11 +90,26 @@ let deleteProduct = async(req,res) => {
         })
     }
 }
+let fiveMostRatingProduct = async(req,res) => {
+    try {
+        let data = await productService.fiveMostRatingProduct();
+        return res.status(200).json({
+            data
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(200).json({
+            errCode:2,
+            errMessage:"Error from server"
+        })
+    }
+}
 module.exports={
     createProduct,
     getAllProduct,
     getAllProductByCategory,
     getProductById,
     getFiveNewestProducts,
-    deleteProduct
+    deleteProduct,
+    fiveMostRatingProduct
 }

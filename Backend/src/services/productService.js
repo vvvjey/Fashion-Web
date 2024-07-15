@@ -1,5 +1,22 @@
 const db = require('../models/index')
-let createProduct = (data) => {
+const {runPythonScript} = require('../helper/python');
+const { Op } = require('sequelize');
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+
+async function handleUpload(file) {
+    const res = await cloudinary.uploader.upload(file, {
+      resource_type: "auto",
+    });
+    return res;
+  }
+
+let createProduct = (data,imgFile) => {
     return new Promise(async(resolve,reject)=>{
         try {
             if(!data.name || !data.size || !data.color || !data.stock){
@@ -10,6 +27,14 @@ let createProduct = (data) => {
                     }
                 ) 
             } else {
+                console.log('data ne : ',data)
+                
+                // Handle upload image
+                const b64 = Buffer.from(imgFile.buffer).toString("base64");
+                let dataURI = "data:" + imgFile.mimetype + ";base64," + b64;
+                const imgUrl = await handleUpload(dataURI);
+                // 
+
                 let isExistProduct = await db.Product.findOne({
                     where:{
                         name:data.name
@@ -32,7 +57,7 @@ let createProduct = (data) => {
                         size:data.size,
                         color:data.color,
                         stock:data.stock,
-                        img:data.img
+                        img:imgUrl.secure_url
 
                     })
                 } else {
@@ -42,20 +67,20 @@ let createProduct = (data) => {
                         size:data.size,
                         color:data.color,
                         stock:data.stock,
-                        img:data.img
+                        img:imgUrl.secure_url
                     })
                 }
                 resolve(
                     {
                         errCode:0,
                         errMessage:"Ok!",
-                        newProduct,
-                        newProductDetail
+                        // newProduct,
+                        // newProductDetail
                     }
                 )
             }
         } catch (error) {
-            if(error.errors[0].message == "uniqueConstraint must be unique"){
+            if (error.errors && error.errors.length > 0 && error.errors[0].message === "uniqueConstraint must be unique") {
                 resolve({
                     errCode:1,
                     errMessage:"Existed product in size,color"
@@ -226,11 +251,44 @@ let deleteProduct = (data) =>{
         }
     })
 }
+let fiveMostRatingProduct = () =>{
+    return new Promise(async(resolve,reject)=>{
+        try {
+            runPythonScript()
+            .then(async result=>{
+                let products = await db.Product.findAll({
+                    where: {
+                      productId: {
+                        [Op.in]: result
+                      }
+                    },
+                    include:[
+                        {
+                            model : db.Product_detail
+                        }
+                    ]
+                  });
+                resolve({
+                    errCode:0,
+                    products
+                })
+            })
+            .catch(error=>{
+                reject({
+                    error
+                })
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports={
     createProduct,
     getAllProduct,
     getAllProductByCategory,
     getProductById,
     getFiveNewestProducts,
-    deleteProduct
+    deleteProduct,
+    fiveMostRatingProduct
 }

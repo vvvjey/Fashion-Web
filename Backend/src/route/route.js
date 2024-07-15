@@ -1,9 +1,12 @@
 const express = require("express");
+const upload = require("../middlewares/multerUpload");
+
 let userController = require('../controllers/userController');
 let productController = require('../controllers/productController');
 let cartController = require('../controllers/cartController');
-let orderController = require('../controllers/orderController')
-let commentController = require('../controllers/commentController')
+let orderController = require('../controllers/orderController');
+let commentController = require('../controllers/commentController');
+let chatController = require('../controllers/chatController');
 
 let router=express.Router()
 let {verifyAccessToken} = require('../middlewares/verifyToken')
@@ -20,12 +23,14 @@ let initWebRoutes = (app) => {
 
 
     //Product
-    router.post('/api/create-product',productController.createProduct);
+    router.post('/api/create-product',upload.single('img'),productController.createProduct);
     router.get('/api/get-all-product',productController.getAllProduct);
     router.get('/api/get-all-product-by-category',productController.getAllProductByCategory);
     router.get('/api/get-product-by-id',productController.getProductById);
     router.get('/api/get-five-newest-products',productController.getFiveNewestProducts);
     router.delete('/api/delete-product',productController.deleteProduct);
+    router.get('/api/get-five-most-rating-product',productController.fiveMostRatingProduct);
+
 
     //Cart
     router.get('/api/get-products-from-cart-by-id',cartController.getProductsById);
@@ -42,6 +47,14 @@ let initWebRoutes = (app) => {
     // Comment
     router.post('/api/create-comment',commentController.createComment);
     router.get('/api/get-comment-by-product-id',commentController.getCommentbyProductId);
+
+
+    // Chat
+    router.post('/api/create-chat',chatController.createChat);
+    router.get('/api/find-chat',chatController.findChat);
+    router.get('/api/user-chats',chatController.userChats);
+    router.post('/api/add-message',chatController.addMessage);
+    router.get('/api/get-message',chatController.getMessage);
 
 
     return app.use("/",router)
