@@ -3,9 +3,10 @@ This project is a full-stack e-commerce web application built to provide a seaml
 
 ### 🛠️ Tech Stack  
 - **Frontend**: React.js  
-- **Backend**: Node.js, Flask  
-- **Database**: MySQL  
-- **Message Queue**: Apache Kafka  
+- **Backend**: Node.js, Flask
+- **Database**: MySQL
+- **Real-Time Communication**: Socket.io  
+- **Order Process Queue**: Apache Kafka  
 - **Deployment**: Docker, Jenkins  
 - **Cloud Storage**: Cloudinary  
 
